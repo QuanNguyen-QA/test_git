@@ -1,0 +1,30 @@
+name: Execute Bash Script for Git Server and Client on Docker Automation Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-bash-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Make the script executable
+      - name: Make the bash script executable
+        run: chmod +x ./test_git_docker.sh
+
+      # Step 4: Run the bash script
+      - name: Run the Git server-client setup script
+        run: ./test_git_docker.sh
